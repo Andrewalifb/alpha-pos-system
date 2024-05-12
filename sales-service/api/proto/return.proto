@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package pos;
+
+
+option go_package="github.com/Andrewalifb/alpha-pos-system/sales-service";
+
+import "google/protobuf/timestamp.proto";
+import "alpha-pos-system/sales-service/api/proto/common.proto"; 
+
+// PosReturn
+message PosReturn {
+  string return_id = 1;
+  string sale_id = 2;
+  string product_id = 3;
+  int32 quantity = 4;
+  google.protobuf.Timestamp return_date = 5;
+  string reason = 6;
+  string company_id = 7;
+  google.protobuf.Timestamp created_at = 8;
+  string created_by = 9;
+  google.protobuf.Timestamp updated_at = 10;
+  string updated_by = 11;
+}
+
+// Request and Response messages
+message CreatePosReturnRequest {
+  PosReturn pos_return = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message CreatePosReturnResponse {
+  PosReturn pos_return = 1;
+}
+
+message ReadPosReturnRequest {
+  string return_id = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message ReadPosReturnResponse {
+  PosReturn pos_return = 1;
+}
+
+message UpdatePosReturnRequest {
+  PosReturn pos_return = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message UpdatePosReturnResponse {
+  PosReturn pos_return = 1;
+}
+
+message DeletePosReturnRequest {
+  string return_id = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message DeletePosReturnResponse {
+  bool success = 1;
+}
+
+message ReadAllPosReturnsRequest {
+    JWTPayload jwt_payload = 1;
+}
+
+message ReadAllPosReturnsResponse {
+  repeated PosReturn pos_returns = 1;
+}
+
+// PosReturnService
+service PosReturnService {
+  rpc CreatePosReturn(CreatePosReturnRequest) returns (CreatePosReturnResponse);
+  rpc ReadPosReturn(ReadPosReturnRequest) returns (ReadPosReturnResponse);
+  rpc UpdatePosReturn(UpdatePosReturnRequest) returns (UpdatePosReturnResponse);
+  rpc DeletePosReturn(DeletePosReturnRequest) returns (DeletePosReturnResponse);
+  rpc ReadAllPosReturns(ReadAllPosReturnsRequest) returns (ReadAllPosReturnsResponse);
+}

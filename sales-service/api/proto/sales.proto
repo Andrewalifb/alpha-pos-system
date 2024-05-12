@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package pos;
+
+
+option go_package="github.com/Andrewalifb/alpha-pos-system/sales-service";
+
+import "google/protobuf/timestamp.proto";
+import "alpha-pos-system/sales-service/api/proto/common.proto"; 
+
+// PosSale
+message PosSale {
+  string sale_id = 1;
+  string product_id = 2;
+  string customer_id = 3;
+  int32 quantity = 4;
+  google.protobuf.Timestamp sale_date = 5;
+  double total_price = 6;
+  string store_id = 7;
+  string cashier_id = 8;
+  string payment_method_id = 9;
+  string company_id = 10;
+  google.protobuf.Timestamp created_at = 11;
+  string created_by = 12;
+  google.protobuf.Timestamp updated_at = 13;
+  string updated_by = 14;
+}
+
+// Request and Response messages
+message CreatePosSaleRequest {
+  PosSale pos_sale = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message CreatePosSaleResponse {
+  PosSale pos_sale = 1;
+}
+
+message ReadPosSaleRequest {
+  string sale_id = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message ReadPosSaleResponse {
+  PosSale pos_sale = 1;
+}
+
+message UpdatePosSaleRequest {
+  PosSale pos_sale = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message UpdatePosSaleResponse {
+  PosSale pos_sale = 1;
+}
+
+message DeletePosSaleRequest {
+  string sale_id = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message DeletePosSaleResponse {
+  bool success = 1;
+}
+
+message ReadAllPosSalesRequest {
+    JWTPayload jwt_payload = 1;
+}
+
+message ReadAllPosSalesResponse {
+  repeated PosSale pos_sales = 1;
+}
+
+// PosSaleService
+service PosSaleService {
+  rpc CreatePosSale(CreatePosSaleRequest) returns (CreatePosSaleResponse);
+  rpc ReadPosSale(ReadPosSaleRequest) returns (ReadPosSaleResponse);
+  rpc UpdatePosSale(UpdatePosSaleRequest) returns (UpdatePosSaleResponse);
+  rpc DeletePosSale(DeletePosSaleRequest) returns (DeletePosSaleResponse);
+  rpc ReadAllPosSales(ReadAllPosSalesRequest) returns (ReadAllPosSalesResponse);
+}

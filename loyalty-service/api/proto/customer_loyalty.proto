@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package pos;
+
+option go_package="github.com/Andrewalifb/alpha-pos-system/loyalty-service";
+
+import "google/protobuf/timestamp.proto";
+import "alpha-pos-system/loyalty-service/api/proto/common.proto";
+
+// PosCustomerLoyalty
+message PosCustomerLoyalty {
+  string customer_id = 1;
+  string level_id = 2;
+  int32 reward_points = 3;
+  string company_id = 4;
+  google.protobuf.Timestamp created_at = 5;
+  string created_by = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  string updated_by = 8;
+}
+
+// Request and Response messages
+message CreatePosCustomerLoyaltyRequest {
+  PosCustomerLoyalty pos_customer_loyalty = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message CreatePosCustomerLoyaltyResponse {
+  PosCustomerLoyalty pos_customer_loyalty = 1;
+}
+
+message ReadPosCustomerLoyaltyRequest {
+  string customer_id = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message ReadPosCustomerLoyaltyResponse {
+  PosCustomerLoyalty pos_customer_loyalty = 1;
+}
+
+message UpdatePosCustomerLoyaltyRequest {
+  PosCustomerLoyalty pos_customer_loyalty = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message UpdatePosCustomerLoyaltyResponse {
+  PosCustomerLoyalty pos_customer_loyalty = 1;
+}
+
+message DeletePosCustomerLoyaltyRequest {
+  string customer_id = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message DeletePosCustomerLoyaltyResponse {
+  bool success = 1;
+}
+
+message ReadAllPosCustomerLoyaltiesRequest {
+    JWTPayload jwt_payload = 1;
+}
+
+message ReadAllPosCustomerLoyaltiesResponse {
+  repeated PosCustomerLoyalty pos_customer_loyalties = 1;
+}
+
+// PosCustomerLoyaltyService
+service PosCustomerLoyaltyService {
+  rpc CreatePosCustomerLoyalty(CreatePosCustomerLoyaltyRequest) returns (CreatePosCustomerLoyaltyResponse);
+  rpc ReadPosCustomerLoyalty(ReadPosCustomerLoyaltyRequest) returns (ReadPosCustomerLoyaltyResponse);
+  rpc UpdatePosCustomerLoyalty(UpdatePosCustomerLoyaltyRequest) returns (UpdatePosCustomerLoyaltyResponse);
+  rpc DeletePosCustomerLoyalty(DeletePosCustomerLoyaltyRequest) returns (DeletePosCustomerLoyaltyResponse);
+  rpc ReadAllPosCustomerLoyalties(ReadAllPosCustomerLoyaltiesRequest) returns (ReadAllPosCustomerLoyaltiesResponse);
+}

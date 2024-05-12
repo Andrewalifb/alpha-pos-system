@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package pos;
+
+option go_package="github.com/Andrewalifb/alpha-pos-system/loyalty-service";
+
+import "google/protobuf/timestamp.proto";
+import "alpha-pos-system/loyalty-service/api/proto/common.proto";
+
+// PosPointsTransaction
+message PosPointsTransaction {
+  string transaction_id = 1;
+  string customer_id = 2;
+  int32 points = 3;
+  google.protobuf.Timestamp transaction_date = 4;
+  string transaction_type = 5; // e.g., 'Earned', 'Redeemed'
+  string company_id = 6;
+  google.protobuf.Timestamp created_at = 7;
+  string created_by = 8;
+  google.protobuf.Timestamp updated_at = 9;
+  string updated_by = 10;
+}
+
+// Request and Response messages for PosPointsTransaction
+message CreatePosPointsTransactionRequest {
+  PosPointsTransaction pos_points_transaction = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message CreatePosPointsTransactionResponse {
+  PosPointsTransaction pos_points_transaction = 1;
+}
+
+message ReadPosPointsTransactionRequest {
+  string transaction_id = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message ReadPosPointsTransactionResponse {
+  PosPointsTransaction pos_points_transaction = 1;
+}
+
+message UpdatePosPointsTransactionRequest {
+  PosPointsTransaction pos_points_transaction = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message UpdatePosPointsTransactionResponse {
+  PosPointsTransaction pos_points_transaction = 1;
+}
+
+message DeletePosPointsTransactionRequest {
+  string transaction_id = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message DeletePosPointsTransactionResponse {
+  bool success = 1;
+}
+
+message ReadAllPosPointsTransactionsRequest {
+    JWTPayload jwt_payload = 1;
+}
+
+message ReadAllPosPointsTransactionsResponse {
+  repeated PosPointsTransaction pos_points_transactions = 1;
+}
+
+// PosPointsTransactionService
+service PosPointsTransactionService {
+  rpc CreatePosPointsTransaction(CreatePosPointsTransactionRequest) returns (CreatePosPointsTransactionResponse);
+  rpc ReadPosPointsTransaction(ReadPosPointsTransactionRequest) returns (ReadPosPointsTransactionResponse);
+  rpc UpdatePosPointsTransaction(UpdatePosPointsTransactionRequest) returns (UpdatePosPointsTransactionResponse);
+  rpc DeletePosPointsTransaction(DeletePosPointsTransactionRequest) returns (DeletePosPointsTransactionResponse);
+  rpc ReadAllPosPointsTransactions(ReadAllPosPointsTransactionsRequest) returns (ReadAllPosPointsTransactionsResponse);
+}

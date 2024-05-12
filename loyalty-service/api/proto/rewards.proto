@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package pos;
+
+option go_package="github.com/Andrewalifb/alpha-pos-system/loyalty-service";
+
+import "google/protobuf/timestamp.proto";
+import "alpha-pos-system/loyalty-service/api/proto/common.proto";
+
+// PosReward
+message PosReward {
+  string reward_id = 1;
+  string reward_name = 2;
+  int32 points_required = 3;
+  string company_id = 4;
+  google.protobuf.Timestamp created_at = 5;
+  string created_by = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  string updated_by = 8;
+}
+
+// Request and Response messages for PosReward
+message CreatePosRewardRequest {
+  PosReward pos_reward = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message CreatePosRewardResponse {
+  PosReward pos_reward = 1;
+}
+
+message ReadPosRewardRequest {
+  string reward_id = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message ReadPosRewardResponse {
+  PosReward pos_reward = 1;
+}
+
+message UpdatePosRewardRequest {
+  PosReward pos_reward = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message UpdatePosRewardResponse {
+  PosReward pos_reward = 1;
+}
+
+message DeletePosRewardRequest {
+  string reward_id = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message DeletePosRewardResponse {
+  bool success = 1;
+}
+
+message ReadAllPosRewardsRequest {
+    JWTPayload jwt_payload = 1;
+}
+
+message ReadAllPosRewardsResponse {
+  repeated PosReward pos_rewards = 1;
+}
+
+// PosRewardService
+service PosRewardService {
+  rpc CreatePosReward(CreatePosRewardRequest) returns (CreatePosRewardResponse);
+  rpc ReadPosReward(ReadPosRewardRequest) returns (ReadPosRewardResponse);
+  rpc UpdatePosReward(UpdatePosRewardRequest) returns (UpdatePosRewardResponse);
+  rpc DeletePosReward(DeletePosRewardRequest) returns (DeletePosRewardResponse);
+  rpc ReadAllPosRewards(ReadAllPosRewardsRequest) returns (ReadAllPosRewardsResponse);
+}

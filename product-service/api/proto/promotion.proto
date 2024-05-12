@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package pos;
+
+option go_package="github.com/Andrewalifb/alpha-pos-system/product-service";
+
+import "google/protobuf/timestamp.proto";
+import "alpha-pos-system/product-service/api/proto/common.proto"; 
+
+// PosPromotion
+message PosPromotion {
+  string promotion_id = 1;
+  string product_id = 2;
+  google.protobuf.Timestamp start_date = 3;
+  google.protobuf.Timestamp end_date = 4;
+  double discount_rate = 5;
+  string company_id = 6;
+  google.protobuf.Timestamp created_at = 7;
+  string created_by = 8;
+  google.protobuf.Timestamp updated_at = 9;
+  string updated_by = 10;
+}
+
+// Request and Response messages
+message CreatePosPromotionRequest {
+  PosPromotion pos_promotion = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message CreatePosPromotionResponse {
+  PosPromotion pos_promotion = 1;
+}
+
+message ReadPosPromotionRequest {
+  string promotion_id = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message ReadPosPromotionResponse {
+  PosPromotion pos_promotion = 1;
+}
+
+message UpdatePosPromotionRequest {
+  PosPromotion pos_promotion = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message UpdatePosPromotionResponse {
+  PosPromotion pos_promotion = 1;
+}
+
+message DeletePosPromotionRequest {
+  string promotion_id = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message DeletePosPromotionResponse {
+  bool success = 1;
+}
+
+message ReadAllPosPromotionsRequest {
+    JWTPayload jwt_payload = 1;
+}
+
+message ReadAllPosPromotionsResponse {
+  repeated PosPromotion pos_promotions = 1;
+}
+
+// PosPromotionService
+service PosPromotionService {
+  rpc CreatePosPromotion(CreatePosPromotionRequest) returns (CreatePosPromotionResponse);
+  rpc ReadPosPromotion(ReadPosPromotionRequest) returns (ReadPosPromotionResponse);
+  rpc UpdatePosPromotion(UpdatePosPromotionRequest) returns (UpdatePosPromotionResponse);
+  rpc DeletePosPromotion(DeletePosPromotionRequest) returns (DeletePosPromotionResponse);
+  rpc ReadAllPosPromotions(ReadAllPosPromotionsRequest) returns (ReadAllPosPromotionsResponse);
+}

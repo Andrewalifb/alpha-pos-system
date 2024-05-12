@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package pos;
+
+option go_package="github.com/Andrewalifb/alpha-pos-system/loyalty-service";
+
+import "google/protobuf/timestamp.proto";
+import "alpha-pos-system/loyalty-service/api/proto/common.proto";
+
+// PosLoyaltyLevel
+message PosLoyaltyLevel {
+  string level_id = 1;
+  string level_name = 2;
+  int32 points_required = 3;
+  string company_id = 4;
+  google.protobuf.Timestamp created_at = 5;
+  string created_by = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  string updated_by = 8;
+}
+
+// Request and Response messages for PosLoyaltyLevel
+message CreatePosLoyaltyLevelRequest {
+  PosLoyaltyLevel pos_loyalty_level = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message CreatePosLoyaltyLevelResponse {
+  PosLoyaltyLevel pos_loyalty_level = 1;
+}
+
+message ReadPosLoyaltyLevelRequest {
+  string level_id = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message ReadPosLoyaltyLevelResponse {
+  PosLoyaltyLevel pos_loyalty_level = 1;
+}
+
+message UpdatePosLoyaltyLevelRequest {
+  PosLoyaltyLevel pos_loyalty_level = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message UpdatePosLoyaltyLevelResponse {
+  PosLoyaltyLevel pos_loyalty_level = 1;
+}
+
+message DeletePosLoyaltyLevelRequest {
+  string level_id = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message DeletePosLoyaltyLevelResponse {
+  bool success = 1;
+}
+
+message ReadAllPosLoyaltyLevelsRequest {
+    JWTPayload jwt_payload = 1;
+}
+
+message ReadAllPosLoyaltyLevelsResponse {
+  repeated PosLoyaltyLevel pos_loyalty_levels = 1;
+}
+
+// PosLoyaltyLevelService
+service PosLoyaltyLevelService {
+  rpc CreatePosLoyaltyLevel(CreatePosLoyaltyLevelRequest) returns (CreatePosLoyaltyLevelResponse);
+  rpc ReadPosLoyaltyLevel(ReadPosLoyaltyLevelRequest) returns (ReadPosLoyaltyLevelResponse);
+  rpc UpdatePosLoyaltyLevel(UpdatePosLoyaltyLevelRequest) returns (UpdatePosLoyaltyLevelResponse);
+  rpc DeletePosLoyaltyLevel(DeletePosLoyaltyLevelRequest) returns (DeletePosLoyaltyLevelResponse);
+  rpc ReadAllPosLoyaltyLevels(ReadAllPosLoyaltyLevelsRequest) returns (ReadAllPosLoyaltyLevelsResponse);
+}

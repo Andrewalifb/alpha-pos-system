@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package pos;
+
+option go_package="github.com/Andrewalifb/alpha-pos-system/product-service";
+
+import "google/protobuf/timestamp.proto";
+import "alpha-pos-system/product-service/api/proto/common.proto"; 
+
+// PosSupplier
+message PosSupplier {
+  string supplier_id = 1;
+  string supplier_name = 2;
+  string contact_name = 3;
+  string contact_email = 4;
+  string contact_phone = 5;
+  string company_id = 6;
+  google.protobuf.Timestamp created_at = 7;
+  string created_by = 8;
+  google.protobuf.Timestamp updated_at = 9;
+  string updated_by = 10;
+}
+
+// Request and Response messages
+message CreatePosSupplierRequest {
+  PosSupplier pos_supplier = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message CreatePosSupplierResponse {
+  PosSupplier pos_supplier = 1;
+}
+
+message ReadPosSupplierRequest {
+  string supplier_id = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message ReadPosSupplierResponse {
+  PosSupplier pos_supplier = 1;
+}
+
+message UpdatePosSupplierRequest {
+  PosSupplier pos_supplier = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message UpdatePosSupplierResponse {
+  PosSupplier pos_supplier = 1;
+}
+
+message DeletePosSupplierRequest {
+  string supplier_id = 1;
+  JWTPayload jwt_payload = 2;
+}
+
+message DeletePosSupplierResponse {
+  bool success = 1;
+}
+
+message ReadAllPosSuppliersRequest {
+    JWTPayload jwt_payload = 1;
+}
+
+message ReadAllPosSuppliersResponse {
+  repeated PosSupplier pos_suppliers = 1;
+}
+
+// PosSupplierService
+service PosSupplierService {
+  rpc CreatePosSupplier(CreatePosSupplierRequest) returns (CreatePosSupplierResponse);
+  rpc ReadPosSupplier(ReadPosSupplierRequest) returns (ReadPosSupplierResponse);
+  rpc UpdatePosSupplier(UpdatePosSupplierRequest) returns (UpdatePosSupplierResponse);
+  rpc DeletePosSupplier(DeletePosSupplierRequest) returns (DeletePosSupplierResponse);
+  rpc ReadAllPosSuppliers(ReadAllPosSuppliersRequest) returns (ReadAllPosSuppliersResponse);
+}
